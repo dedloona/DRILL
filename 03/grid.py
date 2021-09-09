@@ -25,3 +25,4 @@ while(count < 6):
         turtle.forward(100)
         turtle.pendown()
         count += 1
+turtle.exitonclick
