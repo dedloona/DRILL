@@ -57,7 +57,6 @@ while running:
     clear_canvas()
     kpu_ground.draw(KPU_WIDTH // 2, KPU_HEIGHT // 2)
     character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
-
     random_hand()
     to_char()
     update_canvas()
