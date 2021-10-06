@@ -16,13 +16,6 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
 
-def random_hand():
-    global ax, ay
-    ax = random.randint(0,1280)
-    ay = random.randint(0,1024)
-    arrow.draw(ax,ay)
-
-
 def to_char():
     global x, y,ax,ay
     if ax < x:
@@ -49,17 +42,14 @@ arrow = load_image('hand_arrow.png')
 running = True
 x, y = KPU_WIDTH // 2, KPU_HEIGHT // 2
 frame = 0
-ax = 0
-ay = 0
-
-random_hand()
+ax = random.randint(0, 1280)
+ay = random.randint(0, 1024)
 
 while running:
     clear_canvas()
     kpu_ground.draw(KPU_WIDTH // 2, KPU_HEIGHT // 2)
     character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
-    
-    random_hand()
+    arrow.draw(ax,ay)
     to_char()
     update_canvas()
     frame = (frame + 1) % 8
