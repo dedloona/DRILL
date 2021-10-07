@@ -70,17 +70,18 @@ def draw_line_basic(p1, p2):
 
 def draw_line():
 
-    a = 10
-    b = 50
+    a = 30
+    b = 10
     i = 0
     while(True):
 
         t = i
-        x = (((a - b) * math.cos(t)) + (b*math.cos(t*(a/b)-1)))*1
-        y = (((a - b) * math.sin(t)) - (b*math.sin(t*(a/b)-1)))*1
+        x = ((a - b) * math.cos(t) + b*math.cos(t*(a/b)-1))*1
+        y = ((a - b) * math.sin(t) - b*math.sin(t*(a/b)-1))*1
         k = a/b
         draw_point((x, y))
-        i = i+10
+        i = i+0.1
+
     pass
 # x = (a - b) * Cos(t) + b * Cos(t * ((a / b) - 1))
 # y = (a - b) * Sin(t) - b * Sin(t * ((a / b) - 1))
@@ -88,9 +89,6 @@ def draw_line():
 
 
 prepare_turtle_canvas()
-
-p1 = (100,100)
-p2 = (100,100)
 
 #draw_line_basic(p1,p2)
 draw_line()
