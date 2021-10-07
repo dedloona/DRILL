@@ -68,28 +68,31 @@ def draw_line_basic(p1, p2):
     pass
 
 
-def draw_line(p1, p2):
-    draw_big_point(p1)
-    draw_big_point(p2)
+def draw_line():
 
-    x1, y1 = p1
-    x2, y2 = p2
+    a = 10
+    b = 50
+    i = 0
+    while(True):
 
-    for i in range(0, 360 + 1, 2):
-        t = i / 100
-        x = (x1 - y1) * math.cos() + t * x2
-        y = (1 - t) * y1 + t * y2
+        t = i
+        x = (((a - b) * math.cos(t)) + (b*math.cos(t*(a/b)-1)))*1
+        y = (((a - b) * math.sin(t)) - (b*math.sin(t*(a/b)-1)))*1
+        k = a/b
         draw_point((x, y))
-    draw_point(p2)
+        i = i+10
     pass
+# x = (a - b) * Cos(t) + b * Cos(t * ((a / b) - 1))
+# y = (a - b) * Sin(t) - b * Sin(t * ((a / b) - 1))
+# k = a/b
 
 
 prepare_turtle_canvas()
 
-p1 = (-200, 300)
-p2 = (200, 300)
+p1 = (100,100)
+p2 = (100,100)
 
 #draw_line_basic(p1,p2)
-draw_line(p1, p2)
+draw_line()
 
 turtle.done()
