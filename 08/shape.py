@@ -70,14 +70,14 @@ def draw_line_basic(p1, p2):
 
 def draw_line():
 
-    a = 30
-    b = 10
+    a = 300
+    b = 100
     i = 0
     while(True):
 
         t = i
-        x = ((a - b) * math.cos(t) + b*math.cos(t*(a/b)-1))*1
-        y = ((a - b) * math.sin(t) - b*math.sin(t*(a/b)-1))*1
+        x = ((a - b) * math.cos(t) + b*math.cos(t*(a/b-1)))
+        y = ((a - b) * math.sin(t) - b*math.sin(t*(a/b-1)))
         k = a/b
         draw_point((x, y))
         i = i+0.1
