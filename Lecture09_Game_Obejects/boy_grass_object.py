@@ -22,6 +22,8 @@ class Boy:
 
     def draw(self):
         self.image.clip_draw(self.frame*100, 0, 100 ,100 ,self.x, self.y)
+        self.image.rotate_draw(self.frame*100,90,100,100)
+
 
 
 def handle_events():
