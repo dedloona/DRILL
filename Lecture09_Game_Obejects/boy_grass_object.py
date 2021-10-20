@@ -1,3 +1,5 @@
+import math
+
 from pico2d import *
 import random
 # Game object class here
@@ -12,17 +14,24 @@ class Grass:
 class Boy:
     def __init__(self):
         self.image = load_image('run_animation.png')
-        self.x, self.y = random.randint(0, 200), random.randint(90, 200)
-        self.frame = random.randint(0,7)
+        self.x, self.y = 0,90
+        self.frame = 7
 
     def update(self): # 소년의 행위 구현
-        self.x += random.randint(5,15)
+        self.x += 1
         self.frame = (self.frame + 1)%8
 
 
     def draw(self):
         self.image.clip_draw(self.frame*100, 0, 100 ,100 ,self.x, self.y)
-        self.image.rotate_draw(self.frame*100,90,100,100)
+    def rotate(self):
+        pi = math.pi
+        r = 0.0
+        for i in range(0, 4):
+            r += 1.5708
+            self.image.clip_composite_draw(self.frame*100, 0, 100,100,r, 'None' , self.x, self.y,100,100)
+
+
 
 
 
@@ -40,9 +49,9 @@ def handle_events():
 open_canvas()
 
 grass = Grass()
-# boy = Boy()
+boy = Boy()
 
-team = [ Boy() for i in range(11) ]
+# team = [ Boy() for i in range(11) ]
 
 running = True
 
@@ -53,16 +62,11 @@ while running:
     handle_events() # 키입력
 
     # Game logic
-    for boy in team:
-        boy.update()
-
+    boy.update()
     # Game drawing
     clear_canvas()
-
     grass.draw()
-    for boy in team:
-        boy.draw()
-
+    boy.rotate()
 
     update_canvas()
 
