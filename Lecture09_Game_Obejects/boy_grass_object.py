@@ -26,10 +26,10 @@ class Boy:
         self.image.clip_draw(self.frame*100, 0, 100 ,100 ,self.x, self.y)
     def rotate(self):
         pi = math.pi
-        r = 0.0
-        for i in range(0, 4):
-            r += 1.5708
-            self.image.clip_composite_draw(self.frame*100, 0, 100,100,r, 'None' , self.x, self.y,100,100)
+        
+        
+        r = 1.5708
+        self.image.clip_composite_draw(self.frame*100, 0, 100,100,r*4, 'None' , self.x, self.y,100,100)
 
 
 
