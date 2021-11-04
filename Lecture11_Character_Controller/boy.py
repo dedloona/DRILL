@@ -1,19 +1,23 @@
 from pico2d import *
 
 # Boy Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP,  SLEEP_TIMER = range(5)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP,  SLEEP_TIMER , DASH_DOWN, DASH_UP = range(7)
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
     (SDL_KEYDOWN, SDLK_LEFT): LEFT_DOWN,
     (SDL_KEYUP, SDLK_RIGHT): RIGHT_UP,
-    (SDL_KEYUP, SDLK_LEFT): LEFT_UP
+    (SDL_KEYUP, SDLK_LEFT): LEFT_UP,
+    (SDL_KEYDOWN,SDLK_LSHIFT): DASH_DOWN,
+    (SDL_KEYUP, SDLK_LSHIFT): DASH_UP
 }
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
     (SDL_KEYDOWN, SDLK_LEFT): LEFT_DOWN,
     (SDL_KEYUP, SDLK_RIGHT): RIGHT_UP,
-    (SDL_KEYUP, SDLK_LEFT): LEFT_UP
+    (SDL_KEYUP, SDLK_LEFT): LEFT_UP,
+    (SDL_KEYDOWN,SDLK_LSHIFT): DASH_DOWN,
+    (SDL_KEYUP, SDLK_LSHIFT): DASH_UP
 }
 
 
@@ -83,6 +87,30 @@ class SleepState:
             boy.image.clip_composite_draw(boy.frame * 100, 200, 100, 100,
                 -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
 
+class DashState:
+    def enter(boy, event):
+        if event == RIGHT_DOWN and event == DASH_DOWN:
+            boy.velocity += 3
+        elif event == LEFT_DOWN and event == DASH_DOWN:
+            boy.velocity -= 3
+        elif event == RIGHT_UP:
+            boy.velocity -= 1
+        elif event == LEFT_UP:
+            boy.velocity += 1
+            boy.dir = boy.velocity
+    def exit(boy, event):
+        pass
+    def do(boy):
+        boy.frame = (boy.frame + 1) % 8
+        boy.timer -= 1
+        boy.x += boy.velocity
+        boy.x = clamp(25, boy.x, 800 - 25)
+    def draw(boy):
+        if boy.velocity == 1:
+            boy.image.clip_draw(boy.frame * 100, 100, 100, 100, boy.x, boy.y)
+        else:
+            boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
+
 next_state_table = {
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState,
                 RIGHT_DOWN: RunState, LEFT_DOWN: RunState,
@@ -92,15 +120,12 @@ next_state_table = {
                LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState,},
 
     SleepState: {LEFT_DOWN: RunState, RIGHT_DOWN: RunState,
-                 LEFT_UP: RunState, RIGHT_UP: RunState}
+                 LEFT_UP: RunState, RIGHT_UP: RunState},
+
+    DashState: {RIGHT_UP: RunState, LEFT_UP: RunState,
+                RIGHT_DOWN: RunState, LEFT_DOWN: RunState}
 
 }
-
-
-
-
-
-
 
 class Boy:
 
@@ -109,6 +134,8 @@ class Boy:
         self.image = load_image('animation_sheet.png')
         self.dir = 1
         self.velocity = 0
+        self.frame = 0
+        self.timer = 0
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
