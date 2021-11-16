@@ -102,9 +102,9 @@ class DashState:
         elif event == LEFT_DASH_DOWN:
             boy.velocity = 3
         elif event == RIGHT_DASH_UP:
-            boy.velocity -= 4
+            boy.velocity -= 5
         elif event == LEFT_DASH_UP:
-            boy.velocity -= 4
+            boy.velocity -= 5
         boy.dir = boy.velocity
         boy.timer = 2000
     def exit(boy, event):
@@ -117,7 +117,7 @@ class DashState:
         if boy.timer == 0:
             boy.add_event(DASH_TIMER)
     def draw(boy):
-        if boy.velocity != 3:
+        if boy.velocity == 3:
             boy.image.clip_draw(boy.frame * 100, 100, 100, 100, boy.x, boy.y)
         else:
             boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
