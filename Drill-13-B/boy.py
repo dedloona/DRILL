@@ -55,7 +55,7 @@ class IdleState:
         boy.timer -= 1
         if boy.timer == 0:
             boy.add_event(SLEEP_TIMER)
-        
+
 
     def draw(boy):
         if boy.dir == 1:
